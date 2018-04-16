@@ -41,15 +41,11 @@ void loop() {
     //leds[0] = CHSV( random(20,30), random(140,255), random (180,255)); // set a little blue and allow some "heat" to effect the saturation
     leds[0] = CHSV( 32, random8(180,240), random8 (150,200)); // set a little blue and allow some "heat" to effect the saturation
     FastLED.show(); // update display
+        
     
-    //randColor = random8 (25,35); // allow color to range from reddish to orange-ish
-    // now do the rest of the leds
-
-    
-    
-    maxLED = random8(3,NUM_LEDS); // this will determine how many leds get turned on for the current cycle.
-    intensity = random8(210,255);   // randomize intensity a bit
-    for(dot = 1; dot <= maxLED; dot++) // this will make the higher tips seem whiter
+    maxLED = random8(3,NUM_LEDS);       // this will determine how many leds get turned on for the current cycle.
+    intensity = random8(210,255);       // randomize intensity a bit
+    for(dot = 1; dot <= maxLED; dot++)  // this will make the higher tips seem whiter
     {     
         if (dot == NUM_LEDS-1)// this part changes the saturation of the tip of the flame and makes it appear more white at the tip
         {
@@ -70,8 +66,8 @@ void loop() {
           
         
          // format for color is Hue, Saturation, Value (intensity)
-          leds[dot] = CHSV( random8 (25,35), saturation, intensity); // light them up
-          FastLED.show(); // show them
+          leds[dot] = CHSV( random8 (25,35), saturation, intensity); // randomize the color a bit
+          FastLED.show(); // update the leds so changes are visible
           //minDelay = 20 + pow(dot,2); // set min delay which increases as you move up the stick
           maxDelay = 30 + pow(dot,2); // set max delay which increases as you move up the stick
           FastLED.delay(random8(10,maxDelay));  // wait a sec
@@ -90,11 +86,11 @@ void loop() {
     
     for(dot = random8(2,NUM_LEDS-3); dot < NUM_LEDS ; dot++) 
     {     
-          //leds[dot] = CRGB::Black; // old way -set the leds to black meaning turn them all the way off
+          //leds[dot] = CRGB::Black; // old way - set the leds to black meaning turn them all the way off.  Depending on what kind of diffuser you are using this may look better.
+          leds[dot].nscale8_video( random8(1,128)); // New method - this dims the leds rather than turning them all the way off which results in a smoother action.  
+                                                      // The number passed sets the percentage of brightness, ie x/256.  Example - Setting value to 192 = 192/256 = 75% of brightness
           
-          leds[dot].nscale8_video( random8(1,128)); // this dims the led.  The number passed sets the percentage of brightness, ie x/256.  Example - Setting value to 192 = 192/256 = 75% of brightness
           FastLED.show(); // update
-          //maxDelay = 30 + pow(dot,2); // set max delay which increases as you move up the stick
           FastLED.delay(random8(10,20));  // wait a sec
     }      
     
